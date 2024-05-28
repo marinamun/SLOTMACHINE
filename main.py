@@ -112,16 +112,15 @@ def get_bet():
     
     return bet
 
-def main():
-    balance = deposit()
+def spin(balance):
     lines = get_number_of_lines()
     while True:
-        bet = get_bet()
-        total_bet = bet * lines
-        if total_bet >= balance:
-            print(f"My friend, you don't have enough money for that bet. Your current deposit is ${balance}.")
-        else:
-            break
+            bet = get_bet()
+            total_bet = bet * lines
+            if total_bet >= balance:
+                print(f"My friend, you don't have enough money for that bet. Your current deposit is ${balance}.")
+            else:
+                break
     print(f"Your balance is ${balance} and your total bet is ${total_bet}")
 
     #TIME TO GENERATE THE SLOTS!! (slots = cols)
@@ -133,6 +132,18 @@ def main():
     winning_lines_str = ', '.join(map(str, winning_lines))
 
     print(f"Yayyy you won ${winnings} in the following lines: {winning_lines_str}🥳")
+    return winnings - total_bet
 
+def main():
+    balance = deposit()
+    while True:
+        print(f"Current balance is ${balance}")
+        answer = input("Press enter to play (q to quit).")
+        if answer == "q":
+            break
+        balance += spin(balance)
+
+    print(f"You left with ${balance}")
+    
 
 main()
